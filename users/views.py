@@ -2,11 +2,11 @@ from django.shortcuts import render, reverse
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from .forms import RegisterForm
 
 
 class UserRegisterView(CreateView):
-    model = User
-    fields = ['username', 'email', 'password']
+    form_class = RegisterForm
 
     def get_success_url(self):
         return reverse('login')
