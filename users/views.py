@@ -15,3 +15,7 @@ class UserRegisterView(CreateView):
 @login_required
 def profile(request):
     return render(request, 'users/profile.html')
+
+
+def home(request):
+    return render(request, 'users/index.html')
