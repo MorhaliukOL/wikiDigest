@@ -132,14 +132,15 @@
         <h4 style="color:white">Categories</h4>
         {% recursetree categories %}
             {% if not node.is_leaf_node %}
-                <button class="dropdown-btn">{{ node.name }}
+                <a href="{% url 'articles_by_category' node.name %}">{{ node.name }}</a>
+                <button class="dropdown-btn">
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-container">
                     {{ children }}
                 </div>
             {% else %}
-                <a href="#">{{ node.name }}</a>
+                <a href="{% url 'articles_by_category' node.name %}">{{ node.name }}</a>
             {% endif %}
         {% endrecursetree %}
     </div>

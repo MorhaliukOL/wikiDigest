@@ -1,0 +1,13 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+    <h2 class="mb-3" style="text-align: center">Articles by the subject: {{ category }}</h2>
+    {% for article in articles %}
+        <div class="container">
+            <h3 style="text-align: center"><a href="{% url 'article_details' article.title %}">{{ article.title }}</a></h3>
+            <p style="white-space: pre-line">{{ article.body }}</p>
+            <i>{{ article.author.username }}</i>
+        </div>
+    {% endfor %}
+
+{% endblock %}

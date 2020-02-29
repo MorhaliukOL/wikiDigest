@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'mptt',
     'crispy_forms',
-    'notes.apps.NotesConfig',
+    'articles.apps.NotesConfig',
     'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -66,7 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'notes.context_processors.add_categories_to_context',
+                'articles.context_processors.add_categories_to_context',
             ],
         },
     },

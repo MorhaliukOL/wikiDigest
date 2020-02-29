@@ -2,4 +2,7 @@
 
 {% block content %}
     <h1>Welcome to your profile {{ user.username }}</h1>
+    <div class="container">
+        <a href="{% url 'create_article' %}">Write new article</a>
+    </div>
 {% endblock %}
