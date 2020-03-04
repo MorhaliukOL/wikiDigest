@@ -2,12 +2,32 @@
 
 {% block content %}
     <h2 class="mb-3" style="text-align: center">Articles by the subject: {{ category }}</h2>
-    {% for article in articles %}
+    {% for article in art_obj %}
         <div class="container">
             <h3 style="text-align: center"><a href="{% url 'article_details' article.title %}">{{ article.title }}</a></h3>
             <p style="white-space: pre-line">{{ article.body }}</p>
             <i>{{ article.author.username }}</i>
         </div>
     {% endfor %}
+
+<!--        Start Pagination-->
+    {% if art_obj %}
+        {% if art_obj.has_previous %}
+            <a class="btn btn-outline-info mb-5" href="?page=1">First</a>
+        {% endif %}
+
+        {% for num in art_obj.paginator.page_range %}
+            {% if art_obj.number == num %}
+                <span class="btn btn-info mb-5" >{{ num }}</span>
+            {% elif num > art_obj.number|add:'-3' and num < art_obj.number|add:'3' %}
+                <a class="btn btn-outline-info mb-5" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if art_obj.has_next %}
+            <a class="btn btn-outline-info mb-5" href="?page={{ art_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+    {% endif %}
+<!--        End pagination-->
 
 {% endblock %}

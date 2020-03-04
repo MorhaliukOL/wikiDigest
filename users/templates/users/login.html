@@ -1,6 +1,5 @@
 {% extends "users/base.html" %}
 {% load crispy_forms_tags %}
-<html lang="en">
 
 {% block content %}
     <div>
@@ -10,6 +9,9 @@
             {{ form|crispy }}<br>
             <div class="form-group">
                 <button class="btn btn-dark" type="submit">Login</button>
+                <small class="ml-3">
+                    <a href="{% url 'password_reset' %}">Forget your password?</a>
+                </small>
             </div>
         </form>
         <div>

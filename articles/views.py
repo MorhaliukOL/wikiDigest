@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.http import Http404
+from django.core.paginator import Paginator
 from .forms import CreateArticleForm
 from .models import Article, Category
+
+ARTICLES_PER_PAGE = 2
 
 
 def create_article(request):
@@ -20,23 +22,20 @@ def create_article(request):
 
 
 def show_articles_list(request, category):
-    try:
-        category_obj = Category.objects.get(name=category)
-    except Category.DoesNotExist:
-        raise Http404
-    articles = Article.objects.filter(category=category_obj)
+    category_obj = get_object_or_404(Category, name=category)
+
+    # fix reverse ordering
+    articles = Article.objects.filter(category=category_obj).order_by('-created')
+    paginator = Paginator(articles, ARTICLES_PER_PAGE)
+    page_number = request.GET.get('page')
+    art_obj = paginator.get_page(page_number)
     context = {
-        'articles': articles,
+        'art_obj': art_obj,
         'category': category
     }
     return render(request, 'articles/articles_list.html', context)
 
 
 def article_details(request, title):
-    try:
-        print('the title:', title)
-        article = Article.objects.get(title=title)
-    except Article.DoesNotExist:
-        raise Http404
-
+    article = get_object_or_404(Article, title=title)
     return render(request, 'articles/article_details.html', {'article': article})
