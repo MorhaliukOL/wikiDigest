@@ -1,14 +1,29 @@
 {% extends 'users/base.html' %}
+{% load mptt_tags %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     <h2 class="mb-3" style="text-align: center">Articles by the subject: {{ category }}</h2>
-    {% for article in art_obj %}
-        <div class="container">
-            <h3 style="text-align: center"><a href="{% url 'article_details' article.title %}">{{ article.title }}</a></h3>
-            <p style="white-space: pre-line">{{ article.body }}</p>
-            <i>{{ article.author.username }}</i>
-        </div>
-    {% endfor %}
+
+    <form action="{% url 'articles_by_category' category %}" method="post">
+        {% csrf_token %}
+        {% for article in art_obj %}
+            <div class="container">
+                <h3 style="text-align: center"><a href="{% url 'article_details' article.title %}">{{ article.title }}</a></h3>
+                <p style="white-space: pre-line">{{ article.body }}</p>
+                <small>Author: </small><i>{{ article.author.username }}</i>
+                <small>Published: {{ article.created }}</small>
+
+                <select name="category">
+                    <option value="{{ category.id }}">{{ category }}</option>
+                    {% for subcategory in subcategories %}
+                        <option value="{{ subcategory.id }}" >{{ subcategory }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endfor %}
+        <button type="submit">Save categories</button>
+    </form>
 
 <!--        Start Pagination-->
     {% if art_obj %}

@@ -5,14 +5,14 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Category(MPTTModel):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     parent = TreeForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
 
     class MPTTMeta:
         order_insertion_by = ['name']
 
     def __str__(self):
-        return f'<{self.name}>'
+        return self.name
 
 
 class Article(models.Model):
