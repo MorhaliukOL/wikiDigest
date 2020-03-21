@@ -2,6 +2,7 @@ from datetime import date
 from django.db import models
 from django.contrib.auth.models import User
 from mptt.models import MPTTModel, TreeForeignKey
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Category(MPTTModel):
@@ -19,7 +20,7 @@ class Article(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created = models.DateField(default=date.today)
-    body = models.TextField()
+    body = RichTextUploadingField()
     category = TreeForeignKey(Category, on_delete=models.SET_NULL, null=True)
     ratified = models.BooleanField(default=False)
     references = models.CharField(max_length=500, null=True, blank=True)

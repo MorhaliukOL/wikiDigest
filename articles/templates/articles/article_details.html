@@ -3,8 +3,8 @@
 {% block content %}
     <h2 class="mb-3" style="text-align: center">{{ article.title }}</h2>
     <div class="container">
-        <p style="white-space: pre-line">{{ article.body }}</p>
-        <i>{{ article.author.username }}</i>
+        <p style="white-space: pre-line">{{ article.body|safe }}</p>
+        <i>{{ article.author.username }}</i> <small> Published: {{ article.created }}</small>
     </div>
 
 
